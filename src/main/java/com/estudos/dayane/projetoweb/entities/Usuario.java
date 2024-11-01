@@ -1,5 +1,6 @@
 package com.estudos.dayane.projetoweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,6 +18,8 @@ public class Usuario implements Serializable {
     private String email;
     private String telefone;
     private String password;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.estudos.dayane.projetoweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -11,6 +12,8 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant momento;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
