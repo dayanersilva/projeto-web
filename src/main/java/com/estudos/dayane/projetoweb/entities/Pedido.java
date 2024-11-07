@@ -1,5 +1,6 @@
 package com.estudos.dayane.projetoweb.entities;
 
+import com.estudos.dayane.projetoweb.enums.PedidoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -19,12 +20,15 @@ public class Pedido {
     @JoinColumn(name = "cliente_id")
     private Usuario cliente;
 
+    private Integer pedidoStatus;
+
     public Pedido(){}
 
-    public Pedido(Long id, Instant momento, Usuario cliente) {
+    public Pedido(Long id, Instant momento, Usuario cliente, PedidoStatus pedidoStatus) {
         this.id = id;
         this.momento = momento;
         this.cliente = cliente;
+        setPedidoStatus(pedidoStatus);
     }
 
     public Long getId() {
@@ -50,6 +54,17 @@ public class Pedido {
     public void setCliente(Usuario cliente) {
         this.cliente = cliente;
     }
+
+    public PedidoStatus getPedidoStatus(){
+        return PedidoStatus.valueOf(pedidoStatus);
+    }
+    public void setPedidoStatus(PedidoStatus pedidoStatus){
+        if(pedidoStatus != null) {
+            this.pedidoStatus = pedidoStatus.getCode();
+        }
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
