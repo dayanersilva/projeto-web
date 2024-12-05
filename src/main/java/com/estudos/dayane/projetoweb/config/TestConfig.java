@@ -1,8 +1,10 @@
 package com.estudos.dayane.projetoweb.config;
 
+import com.estudos.dayane.projetoweb.entities.Categoria;
 import com.estudos.dayane.projetoweb.entities.Pedido;
 import com.estudos.dayane.projetoweb.entities.Usuario;
 import com.estudos.dayane.projetoweb.enums.PedidoStatus;
+import com.estudos.dayane.projetoweb.repositories.CategoriaRepository;
 import com.estudos.dayane.projetoweb.repositories.PedidoRepository;
 import com.estudos.dayane.projetoweb.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,16 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     @Override
     public void run(String... args) throws Exception {
+
+        Categoria cat1 = new Categoria(null, "Electronics");
+        Categoria cat2 = new Categoria(null, "Books");
+        Categoria cat3 = new Categoria(null, "Computers");
+        categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 
         Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         Usuario u2 = new Usuario(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
