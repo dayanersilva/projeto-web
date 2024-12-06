@@ -1,41 +1,48 @@
 package com.estudos.dayane.projetoweb.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Categoria {
+public class Categoria implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String name;
+    private Long id;
+    private String nome;
+
+    @Transient
+    private Set<Produto> produtos = new HashSet<>();
 
     public Categoria(){}
 
-    public Categoria(Integer id, String name) {
+    public Categoria(Long id, String nome) {
         this.id = id;
-        this.name = name;
+        this.nome = nome;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Set<Produto> getProdutos() {
+        return produtos;
     }
 
     @Override
