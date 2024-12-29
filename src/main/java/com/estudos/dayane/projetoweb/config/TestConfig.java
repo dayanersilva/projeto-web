@@ -1,14 +1,8 @@
 package com.estudos.dayane.projetoweb.config;
 
-import com.estudos.dayane.projetoweb.entities.Categoria;
-import com.estudos.dayane.projetoweb.entities.Pedido;
-import com.estudos.dayane.projetoweb.entities.Produto;
-import com.estudos.dayane.projetoweb.entities.Usuario;
+import com.estudos.dayane.projetoweb.entities.*;
 import com.estudos.dayane.projetoweb.enums.PedidoStatus;
-import com.estudos.dayane.projetoweb.repositories.CategoriaRepository;
-import com.estudos.dayane.projetoweb.repositories.PedidoRepository;
-import com.estudos.dayane.projetoweb.repositories.ProdutoRepository;
-import com.estudos.dayane.projetoweb.repositories.UsuarioRepository;
+import com.estudos.dayane.projetoweb.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -67,5 +64,12 @@ public class TestConfig implements CommandLineRunner {
         Pedido o3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"), u1, PedidoStatus.AGUARDANDO_PAGAMENTO);
 
         pedidoRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        ItemPedido oi1 = new ItemPedido(o1, p1, 2, p1.getPreco());
+        ItemPedido oi2 = new ItemPedido(o1, p3, 1, p3.getPreco());
+        ItemPedido oi3 = new ItemPedido(o2, p3, 2, p3.getPreco());
+        ItemPedido oi4 = new ItemPedido(o3, p5, 2, p5.getPreco());
+
+        itemPedidoRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
     }
 }
