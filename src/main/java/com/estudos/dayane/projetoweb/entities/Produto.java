@@ -1,5 +1,6 @@
 package com.estudos.dayane.projetoweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,6 +23,9 @@ public class Produto implements Serializable {
     @JoinTable(name = "tb_produto_categoria",
             joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private Set<Categoria> categorias = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Produto(){}
 
@@ -76,6 +80,16 @@ public class Produto implements Serializable {
     public Set<Categoria> getCategorias() {
         return categorias;
     }
+
+    @JsonIgnore
+    public Set<Pedido> getPedidos(){
+        Set<Pedido> pedidoSet = new HashSet<>();
+        for (ItemPedido x : itens){
+            pedidoSet.add(x.getPedido());
+        }
+        return  pedidoSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
