@@ -12,7 +12,7 @@ import java.util.Objects;
 public class ItemPedido implements Serializable {
 
     @EmbeddedId
-    private ItemPedidoPK id = new ItemPedidoPK();
+    private final ItemPedidoPK id = new ItemPedidoPK();
 
     private Integer quantidade;
 
@@ -35,7 +35,6 @@ public class ItemPedido implements Serializable {
     public void setPedido(Pedido pedido){
         id.setPedido(pedido);
     }
-
 
     public Produto getProduto(){
         return id.getProduto();
