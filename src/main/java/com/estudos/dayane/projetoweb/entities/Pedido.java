@@ -66,6 +66,7 @@ public class Pedido implements Serializable {
     public PedidoStatus getPedidoStatus(){
         return PedidoStatus.valueOf(pedidoStatus);
     }
+
     public void setPedidoStatus(PedidoStatus pedidoStatus){
         if(pedidoStatus != null) {
             this.pedidoStatus = pedidoStatus.getCode();
@@ -80,6 +81,14 @@ public class Pedido implements Serializable {
     }
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Double getTotal() {
+        double soma = 0.0;
+        for (ItemPedido item : itens) {
+            soma += item.getSubtotal();
+        }
+        return soma;
     }
 
     @Override
