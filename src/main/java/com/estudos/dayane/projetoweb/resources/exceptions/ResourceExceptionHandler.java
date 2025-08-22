@@ -1,5 +1,6 @@
 package com.estudos.dayane.projetoweb.resources.exceptions;
 
+import com.estudos.dayane.projetoweb.services.exceptions.BancoDeDadosException;
 import com.estudos.dayane.projetoweb.services.exceptions.RecursoNaoEncontradoException;
 
 import java.time.Instant;
@@ -17,6 +18,20 @@ public class ResourceExceptionHandler {
     public ResponseEntity<MensagemError> recursoNaoEncontrado(RecursoNaoEncontradoException e, HttpServletRequest request){
         String erro = "Recurso não encontrado";
         HttpStatus status = HttpStatus.NOT_FOUND;
+        MensagemError mensagemError = new MensagemError(
+                Instant.now(),
+                status.value(),
+                erro,
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(mensagemError);
+    }
+
+    @ExceptionHandler(BancoDeDadosException.class)
+    public ResponseEntity<MensagemError> bancoDeDadosException(BancoDeDadosException e, HttpServletRequest request) {
+        String erro = "Erro de integridade do banco de dados";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         MensagemError mensagemError = new MensagemError(
                 Instant.now(),
                 status.value(),

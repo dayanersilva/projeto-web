@@ -2,9 +2,12 @@ package com.estudos.dayane.projetoweb.services;
 
 import com.estudos.dayane.projetoweb.entities.Usuario;
 import com.estudos.dayane.projetoweb.repositories.UsuarioRepository;
+import com.estudos.dayane.projetoweb.services.exceptions.BancoDeDadosException;
 import com.estudos.dayane.projetoweb.services.exceptions.RecursoNaoEncontradoException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +31,15 @@ public class UsuarioService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        try {
+            if (!repository.existsById(id)) {
+                throw new RecursoNaoEncontradoException(id);
+            }
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new BancoDeDadosException(e.getMessage());
+        }
+
     }
 
     public Usuario update(Long id, Usuario usuario) {
