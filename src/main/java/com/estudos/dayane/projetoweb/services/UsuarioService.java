@@ -2,6 +2,8 @@ package com.estudos.dayane.projetoweb.services;
 
 import com.estudos.dayane.projetoweb.entities.Usuario;
 import com.estudos.dayane.projetoweb.repositories.UsuarioRepository;
+import com.estudos.dayane.projetoweb.services.exceptions.RecursoNaoEncontradoException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class UsuarioService {
     }
 
     public Optional<Usuario> findById(Long id){
-        return repository.findById(id);
+        return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id)));
     }
 
     public Usuario insert(Usuario usuario){
