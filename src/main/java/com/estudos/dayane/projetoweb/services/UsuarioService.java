@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -43,9 +44,13 @@ public class UsuarioService {
     }
 
     public Usuario update(Long id, Usuario usuario) {
-        Usuario obj = repository.getReferenceById(id);
-        updateUsuarioDados(obj, usuario);
-        return repository.save(obj);
+        try {
+            Usuario obj = repository.getReferenceById(id);
+            updateUsuarioDados(obj, usuario);
+            return repository.save(obj);
+        }catch (EntityNotFoundException e) {
+            throw new RecursoNaoEncontradoException(id);
+        }
     }
 
     private void updateUsuarioDados(Usuario obj, Usuario usuario) {
